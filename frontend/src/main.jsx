@@ -8,30 +8,35 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
-import store from "./src/store";
+import store from "./store.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./src/assets/index.css";
-import PrivateRoute from "./src/components/PrivateRoute";
-import AdminRoute from "./src/components/AdminRoute";
-import HomeScreen from "./src/screens/HomeScreen";
-import ProductScreen from "./src/screens/ProductScreen";
-import CartScreen from "./src/screens/CartScreen";
-import LoginScreen from "./src/screens/LoginScreen";
-import RegisterScreen from "./src/screens/RegisterScreen";
-import ShippingScreen from "./src/screens/ShippingScreen";
-import PaymentScreen from "./src/screens/PaymentScreen";
-import PlaceOrderScreen from "./src/screens/PlaceOrderScreen";
-import OrderScreen from "./src/screens/OrderScreen";
-import ProfileScreen from "./src/screens/ProfileScreen";
-import OrderListScreen from "./src/screens/Admin/OrderListScreen";
-import ProductListScreen from "./src/screens/Admin/ProductListScreen";
-import ProductEditScreen from "./src/screens/Admin/ProductEditScreen";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
+import HomeScreen from "./screens/HomeScreen.jsx";
+import ProductScreen from "./screens/ProductScreen";
+import CartScreen from "./screens/CartScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import OrderScreen from "./screens/OrderScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import OrderListScreen from "./screens/Admin/OrderListScreen.jsx";
+import ProductListScreen from "./screens/Admin/ProductListScreen.jsx";
+import ProductEditScreen from "./screens/Admin/ProductEditScreen.jsx";
+import UserListScreen from "./screens/Admin/UserListScreen.jsx";
+import UserEditScreen from "./screens/Admin/UserEditScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
+      <Route path="/search/:keyword" element={<HomeScreen />} />
+      <Route path="/page/:pageNumber" element={<HomeScreen />} />
+      <Route path="/search/:keyword/page/:pageNumber" element={<HomeScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />} />
       <Route path="/login" element={<LoginScreen />} />
@@ -48,7 +53,10 @@ const router = createBrowserRouter(
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/orderlist" element={<OrderListScreen />} />
         <Route path="/admin/productlist" element={<ProductListScreen />} />
+        <Route path="/admin/productlist/:pageNumber" element={<ProductListScreen />} />
         <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
+        <Route path="/admin/userlist" element={<UserListScreen />} />
+        <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
       </Route>
     </Route>
   )
@@ -56,10 +64,12 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <HelmetProvider>
     <Provider store={store}>
       <PayPalScriptProvider deferLoading={true}>
         <RouterProvider router={router} />
       </PayPalScriptProvider>
     </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );

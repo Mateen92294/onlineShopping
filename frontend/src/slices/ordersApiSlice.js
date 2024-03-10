@@ -51,3 +51,4 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const { useCreateOrderMutation, useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery, useGetMyOrdersQuery, useGetOrdersQuery, useDeliverOrderMutation } = orderApiSlice;
+  

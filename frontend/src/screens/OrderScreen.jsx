@@ -204,6 +204,7 @@ const OrderScreen = () => {
                       <Button
                         onClick={onApproveTest}
                         style={{ marginBottom: "10px" }}
+                        disabled
                       >
                         Pay Order
                       </Button>
